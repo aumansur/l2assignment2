@@ -1,4 +1,4 @@
-
+import { Model } from "mongoose";
 
 export type FullName = {
   firstName: string;
@@ -15,14 +15,19 @@ export type Order = {
   quantity: number;
 };
 
-export type Customer = {
+export type TCustomer = {
   id: string;
   userName: string;
   fullName: FullName;
   age: number;
   email: string;
   isActive: boolean;
-  hobbies: string[];
+  hobbies: "Reading" | "Writing" | "Gaming";
   address: Address;
   order: Order[];
 };
+
+// create static method
+export interface UserModel extends Model<TCustomer> {
+  myStaticMethod(id: string): Promise<TCustomer> | null;
+}
