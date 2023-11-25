@@ -13,7 +13,7 @@ const addressSchema = new Schema<Address>({
 });
 
 const customerSchema = new Schema<TCustomer, UserModel>({
-  id: { type: String, required: true, unique: true },
+  userId: { type: String, required: true, unique: true },
   password: { type: String, required: true, unique: true },
   userName: { type: String, required: true, unique: true },
   fullName: fullNameSchema,
@@ -46,11 +46,16 @@ customerSchema.post("save", function () {
 });
 
 // creating a custom static method
+export const Customer = model<TCustomer, UserModel>("Customer", customerSchema);
 
-// customerSchema.statics.isUserExits = async function (id: string) {
-//   const existingUser = await Customer.findOne({ id });
-//   return existingUser;
-// };
+customerSchema.statics.isUserExists = async function (userId: string) {
+  const existingUser = await Customer.findOne({ userId });
+  return existingUser;
+};
 
 // create model
-export const Customer = model<TCustomer>("Customer", customerSchema);
+
+// studentSchema.statics.isUserExists = async function (id: string) {
+//   const existingUser = await Student.findOne({ id });
+//   return existingUser;
+// };

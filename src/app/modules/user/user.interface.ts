@@ -16,7 +16,7 @@ export type Order = {
 };
 
 export type TCustomer = {
-  id: string;
+  userId: string;
   password: string;
   userName: string;
   fullName: FullName;
@@ -30,5 +30,5 @@ export type TCustomer = {
 
 // create static method
 export interface UserModel extends Model<TCustomer> {
-  myStaticMethod(id: string): Promise<TCustomer> | null;
+  myStaticMethod(userId: string): Promise<TCustomer> | null;
 }

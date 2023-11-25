@@ -14,12 +14,16 @@ const getAllUserFromDb = async () => {
   const result = await Customer.find();
   return result;
 };
-const getSingleUserFromDb = async (id: string) => {
-  const result = await Customer.findOne({ id });
+const getSingleUserFromDb = async (userId: string) => {
+  const result = await Customer.findOne({ userId });
   return result;
 };
-const deleteSingleUserFromDb = async (id: string) => {
-  const result = await Customer.deleteOne({ id });
+const deleteSingleUserFromDb = async (userId: string) => {
+  const result = await Customer.deleteOne({ userId });
+  return result;
+};
+const updateSingleUserFromDb = async (userId: string) => {
+  const result = await Customer.updateOne({ userId });
   return result;
 };
 
@@ -28,4 +32,5 @@ export const UserServices = {
   getAllUserFromDb,
   getSingleUserFromDb,
   deleteSingleUserFromDb,
+  updateSingleUserFromDb,
 };

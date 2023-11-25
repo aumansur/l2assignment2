@@ -12,7 +12,7 @@ app.use(cors());
 app.use("/api", UserRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("hello world");
+  res.send("Welcome to level 2 assignment2");
 });
 
 export default app;
