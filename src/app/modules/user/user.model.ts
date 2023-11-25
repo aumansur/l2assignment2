@@ -42,7 +42,7 @@ customerSchema.pre("save", async function (next) {
   next();
 });
 customerSchema.post("save", function () {
-  console.log(this, "post hook: we saved our data");
+  //   console.log(this, "post hook: we saved our data");
 });
 
 // creating a custom static method
@@ -51,6 +51,7 @@ customerSchema.statics.isUserExists = async function (userId: string) {
   const existingUser = await Customer.findOne({ userId });
   return existingUser;
 };
+export const Customer = model<TCustomer, UserModel>("Customer", customerSchema);
 
 // create model
 
