@@ -1,24 +1,25 @@
 import { TCustomer } from "./user.interface";
-import { CustomerModel } from "./user.model";
+import { Customer } from "./user.model";
 
 const createUserIntoDb = async (userData: TCustomer) => {
-  const result = await CustomerModel.create(userData);
-  if (await CustomerModel.isUserExists(userData.id)) {
-    throw new Error("User already exists");
-  }
+  const result = await Customer.create(userData);
+
+  //   if (await Customer.isUserExits(userData.id)) {
+  //     throw new Error("User already exists");
+  //   }
   return result;
 };
 
 const getAllUserFromDb = async () => {
-  const result = await CustomerModel.find();
+  const result = await Customer.find();
   return result;
 };
 const getSingleUserFromDb = async (id: string) => {
-  const result = await CustomerModel.findOne({ id });
+  const result = await Customer.findOne({ id });
   return result;
 };
 const deleteSingleUserFromDb = async (id: string) => {
-  const result = await CustomerModel.deleteOne({ id });
+  const result = await Customer.deleteOne({ id });
   return result;
 };
 

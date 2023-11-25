@@ -13,6 +13,7 @@ const addressSchema = Joi.object({
 
 const customerValidationSchema = Joi.object({
   id: Joi.string().required(),
+  password: Joi.string().required().max(20),
   userName: Joi.string().required(),
   fullName: fullNameSchema,
   age: Joi.number().required(),

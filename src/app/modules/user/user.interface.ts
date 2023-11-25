@@ -17,6 +17,7 @@ export type Order = {
 
 export type TCustomer = {
   id: string;
+  password: string;
   userName: string;
   fullName: FullName;
   age: number;

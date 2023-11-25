@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import { FullName, TCustomer, Address, UserModel } from "./user.interface";
-
+import bcrypt from "bcrypt";
+import config from "../../config";
 const fullNameSchema = new Schema<FullName>({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -13,6 +14,7 @@ const addressSchema = new Schema<Address>({
 
 const customerSchema = new Schema<TCustomer, UserModel>({
   id: { type: String, required: true, unique: true },
+  password: { type: String, required: true, unique: true },
   userName: { type: String, required: true, unique: true },
   fullName: fullNameSchema,
   age: { type: Number, required: true },
@@ -29,11 +31,26 @@ const customerSchema = new Schema<TCustomer, UserModel>({
   ],
 });
 
+customerSchema.pre("save", async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+  next();
+});
+customerSchema.post("save", function () {
+  console.log(this, "post hook: we saved our data");
+});
+
 // creating a custom static method
-customerSchema.statics.isUserExits = async function (id: string) {
-  const existingUser = await CustomerModel.findOne({ id });
-  return existingUser;
-};
+
+// customerSchema.statics.isUserExits = async function (id: string) {
+//   const existingUser = await Customer.findOne({ id });
+//   return existingUser;
+// };
 
 // create model
-export const CustomerModel = model<TCustomer>("Customer", customerSchema);
+export const Customer = model<TCustomer>("Customer", customerSchema);

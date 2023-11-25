@@ -7,16 +7,17 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const { user: userData } = req.body;
     const result = await UserServices.createUserIntoDb(userData);
-    const { error, value } = customerValidationSchema.validate(userData);
+    const { error } = customerValidationSchema.validate(userData);
     if (error) {
-      res.status(500).json({
-        success: false,
-        message: "Something went wrong",
-        error: {
-          code: 404,
-          description: "Something went wrong",
-        },
-      });
+      //   res.status(500).json({
+      //     success: false,
+      //     message: "Something went wrong",
+      //     error: {
+      //       code: 404,
+      //       description: "Something went wrong",
+      //     },
+      //   });
+      console.log(error);
     }
     // will called service func to send this data
 
@@ -26,14 +27,15 @@ const createUser = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(200).json({
-      success: false,
-      message: "User not found",
-      error: {
-        code: 404,
-        description: "User not found!",
-      },
-    });
+    // res.status(200).json({
+    //   success: false,
+    //   message: "User not found",
+    //   error: {
+    //     code: 404,
+    //     description: "User not found!",
+    //   },
+    // });
+    console.log(error);
   }
 };
 const getAllUsers = async (req: Request, res: Response) => {
