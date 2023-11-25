@@ -46,12 +46,13 @@ customerSchema.post("save", function () {
 });
 
 // creating a custom static method
-export const Customer = model<TCustomer, UserModel>("Customer", customerSchema);
 
 customerSchema.statics.isUserExists = async function (userId: string) {
   const existingUser = await Customer.findOne({ userId });
   return existingUser;
 };
+
+export const Customer = model<TCustomer, UserModel>("Customer", customerSchema);
 
 // create model
 

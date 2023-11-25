@@ -9,15 +9,14 @@ const createUser = async (req: Request, res: Response) => {
     const result = await UserServices.createUserIntoDb(userData);
     const { error } = customerValidationSchema.validate(userData);
     if (error) {
-      //   res.status(500).json({
-      //     success: false,
-      //     message: "Something went wrong",
-      //     error: {
-      //       code: 404,
-      //       description: "Something went wrong",
-      //     },
-      //   });
-      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong",
+        error: {
+          code: 404,
+          description: error.message || "Something went wrong",
+        },
+      });
     }
     // will called service func to send this data
 
@@ -26,16 +25,15 @@ const createUser = async (req: Request, res: Response) => {
       message: "User created successfully",
       data: result,
     });
-  } catch (error) {
-    // res.status(200).json({
-    //   success: false,
-    //   message: "User not found",
-    //   error: {
-    //     code: 404,
-    //     description: "User not found!",
-    //   },
-    // });
-    console.log(error);
+  } catch (error: any) {
+    res.status(200).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: error.message || "User not found!",
+      },
+    });
   }
 };
 const getAllUsers = async (req: Request, res: Response) => {
@@ -100,9 +98,43 @@ const deleteSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+const updateSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const userData = req.body;
+    const result = await UserServices.updateSingleUserFromDb(userId, userData);
+    if (result) {
+      userData.password = " ";
+      return res.status(200).json({
+        success: true,
+        message: "User updated successfully",
+        data: userData,
+      });
+    }
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User Id not found!",
+      },
+    });
+  } catch (error) {
+    res.status(200).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
+  }
+};
+
 export const UserControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
   deleteSingleUser,
+  updateSingleUser,
 };

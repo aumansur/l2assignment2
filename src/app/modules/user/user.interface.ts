@@ -30,5 +30,5 @@ export type TCustomer = {
 
 // create static method
 export interface UserModel extends Model<TCustomer> {
-  myStaticMethod(userId: string): Promise<TCustomer> | null;
+  isUserExists(userId: string): Promise<TCustomer> | null;
 }
