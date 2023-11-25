@@ -3,10 +3,10 @@
 ## Description:
 This node js application framework express js in moduler pattern  create to user data and user order 
 
-## use NPM 
+## Use NPM 
 npm install 
 
-## hithub link
+## Github link
 https://github.com/aumansur/l2assignment2
 ##
 ## main domain:
