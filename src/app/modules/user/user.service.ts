@@ -38,3 +38,10 @@ const updateSingleUserFromDb = async (userId: string, userData: TCustomer) => {
     return false;
   }
 };
+export const UserServices = {
+  createUserIntoDb,
+  getAllUserFromDb,
+  getSingleUserFromDb,
+  deleteSingleUserFromDb,
+  updateSingleUserFromDb,
+};
